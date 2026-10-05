@@ -154,6 +154,8 @@
     <ClInclude Include="SendBuffer.h" />
     <ClInclude Include="SendBufferChunk.h" />
     <ClInclude Include="SendBufferManager.h" />
+    <ClInclude Include="Service.h" />
+    <ClInclude Include="Session.h" />
     <ClInclude Include="SocketUtils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +174,8 @@
     <ClCompile Include="SendBufferChunk.cpp" />
     <ClCompile Include="SendBufferManager.cpp" />
     <ClCompile Include="ServerCore.cpp" />
+    <ClCompile Include="Service.cpp" />
+    <ClCompile Include="Session.cpp" />
     <ClCompile Include="SocketUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

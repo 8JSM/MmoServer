@@ -15,6 +15,7 @@
 #include <thread>
 #include <functional>
 #include <chrono>
+#include <atomic>
 // Windows & Network
 #include <winsock2.h>
 #include <mswsock.h>

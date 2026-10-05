@@ -26,3 +26,28 @@ struct IocpEvent
 		owner = nullptr;
 	}
 };
+
+struct AcceptEvent : public IocpEvent
+{
+	AcceptEvent() : IocpEvent(EventType::Accept) {}
+};
+
+struct SendEvent : public IocpEvent
+{
+	SendEvent() : IocpEvent(EventType::Send) {}
+};
+
+struct RecvEvent : public IocpEvent
+{
+	RecvEvent() : IocpEvent(EventType::Recv) {}
+};
+
+struct ConnectEvent : public IocpEvent
+{
+	ConnectEvent() : IocpEvent(EventType::Connect) {}
+};
+
+struct DisconnectEvent : public IocpEvent
+{
+	DisconnectEvent() : IocpEvent(EventType::Disconnect) {}
+};
