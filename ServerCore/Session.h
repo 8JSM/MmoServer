@@ -1,9 +1,9 @@
 #pragma once
 #include "IocpObject.h"
 #include "NetAddress.h"
-#include "RecvBuffer.h"
 #include "IocpEvent.h"
-class SendBuffer;
+#include "RecvBuffer.h"
+#include "SendBuffer.h"
 
 class Session : public IocpObject
 {

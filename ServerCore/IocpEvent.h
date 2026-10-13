@@ -1,5 +1,7 @@
 #pragma once
+
 class IocpObject;
+class SendBuffer;
 
 enum class EventType : uint8
 {
@@ -20,7 +22,7 @@ struct IocpEvent
 		Init();
 	}
 
-	void Init()
+	virtual void Init()
 	{
 		::memset(&overlapped, 0, sizeof(overlapped));
 		owner = nullptr;
@@ -35,6 +37,14 @@ struct AcceptEvent : public IocpEvent
 struct SendEvent : public IocpEvent
 {
 	SendEvent() : IocpEvent(EventType::Send) {}
+
+	std::vector<std::shared_ptr<SendBuffer>> sendBuffers;
+
+	virtual void Init() override
+	{
+		IocpEvent::Init();
+		sendBuffers.clear();
+	}
 };
 
 struct RecvEvent : public IocpEvent
