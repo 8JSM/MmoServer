@@ -81,6 +81,11 @@ bool SocketUtils::SetUpdateAcceptSocket(SOCKET socket, SOCKET listenSocket)
 	return SetSocketOpt(socket, SOL_SOCKET, SO_UPDATE_ACCEPT_CONTEXT, listenSocket);
 }
 
+bool SocketUtils::SetUpdateConnectSocket(SOCKET socket)
+{
+	return SOCKET_ERROR != ::setsockopt(socket, SOL_SOCKET, SO_UPDATE_CONNECT_CONTEXT, nullptr, 0);
+}
+
 bool SocketUtils::SetRecvBufferSize(SOCKET socket, int32 size)
 {
 	return SetSocketOpt(socket, SOL_SOCKET, SO_RCVBUF, size);

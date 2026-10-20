@@ -21,6 +21,7 @@ public:
 	static bool SetRecvBufferSize(SOCKET socket, int32 size);
 	static bool SetSendBufferSize(SOCKET socket, int32 size);
 	static bool SetUpdateAcceptSocket(SOCKET socket, SOCKET listenSocket);
+	static bool SetUpdateConnectSocket(SOCKET socket);
 
 	// 소켓 제어 래퍼
 	static bool Bind(SOCKET socket, const NetAddress& netAddr);

@@ -26,6 +26,7 @@ public:
 public:
 	// 외부 인터페이스
 	void Send(std::shared_ptr<SendBuffer> sendBuffer);
+	bool Connect();
 	void Disconnect(const WCHAR* cause);
 
 	bool IsConnected() const { return _connected; }
@@ -43,8 +44,10 @@ protected:
 
 private:
 	// 네트워크 계층 I/O 처리 매서드
-
+	
 	void ProcessConnect();
+	bool RegisterConnect();
+
 	void ProcessRecv(int32 numOfBytes);
 	void RegisterRecv();
 

@@ -43,7 +43,8 @@ void Session::Dispatch(IocpEvent* iocpEvent, int32 numOfBytes)
 // 데이터 송신
 void Session::Send(std::shared_ptr<SendBuffer> sendBuffer)
 {
-	if (IsConnected() == false) return;
+	if (IsConnected() == false) 
+		return;
 
 	bool registerSend = false;
 
@@ -62,7 +63,8 @@ void Session::Send(std::shared_ptr<SendBuffer> sendBuffer)
 
 void Session::RegisterSend()
 {
-	if (IsConnected() == false) return;
+	if (IsConnected() == false) 
+		return;
 
 	_sendEvent.Init();
 	_sendEvent.owner = shared_from_this();
@@ -145,7 +147,8 @@ void Session::ProcessSend(int32 numOfBytes)
 void Session::RegisterRecv()
 {
 
-	if (IsConnected() == false) return;
+	if (IsConnected() == false) 
+		return;
 
 	_recvEvent.Init();
 	_recvEvent.owner = shared_from_this();
@@ -187,6 +190,12 @@ void Session::ProcessRecv(int32 numOfBytes)
 		return;
 	}
 
+	if (_recvBuffer.OnWrite(numOfBytes) == false)
+	{
+		Disconnect(L"ProcessRecv : OnWrite Overflow");
+		return;
+	}
+
 	int32 dataSize = _recvBuffer.DataSize();
 	int32 processLen = OnRecv(_recvBuffer.ReadPos(), dataSize);
 
@@ -201,15 +210,69 @@ void Session::ProcessRecv(int32 numOfBytes)
 	RegisterRecv();
 }
 
+bool Session::Connect()
+{
+	return RegisterConnect();
+}
+
+bool Session::RegisterConnect()
+{
+	if (IsConnected())
+		return false;
+
+	auto service = _service.lock();
+	if (service == nullptr)
+		return false;
+
+	if (SocketUtils::SetReuseAddress(_socket, true) == false)
+		return false;
+	if (SocketUtils::BindAnyAddress(_socket, 0) == false)
+		return false;
+
+	_connectEvent.Init();
+	_connectEvent.owner = shared_from_this();
+
+	DWORD numOfBytes = 0;
+	SOCKADDR_IN sockAddr = service->GetNetAddress().GetSockAddr();
+
+	if (false == SocketUtils::ConnectEx(
+		_socket,
+		reinterpret_cast<SOCKADDR*>(&sockAddr),
+		sizeof(sockAddr),
+		nullptr,
+		0,
+		&numOfBytes,
+		&_connectEvent.overlapped
+	))
+	{
+		int32 errorCode = WSAGetLastError();
+		if (errorCode != WSA_IO_PENDING)
+		{
+			_connectEvent.owner = nullptr;
+			HandleError(errorCode);
+			return false;
+		}
+	}
+	return true;
+}
+
 // 연결 및 해제
 void Session::ProcessConnect()
 {
 	_connectEvent.owner = nullptr;
 	_connected.store(true);
 
-	if (auto service = _service.lock())
-		service->AddSession(GetSessionRef());
+	auto service = _service.lock();
 
+	if (service != nullptr)
+	{
+		if (service->GetServiceType() == ServiceType::Client)
+		{
+			SocketUtils::SetUpdateConnectSocket(_socket);
+		}
+		service->AddSession(GetSessionRef());
+	}
+	
 	OnConnected();
 
 	RegisterRecv();
