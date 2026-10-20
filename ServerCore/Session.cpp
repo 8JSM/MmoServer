@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Session.h"
 #include "SocketUtils.h"
-
+#include "Service.h"
 
 Session::Session() : _recvBuffer(BUFFER_SIZE)
 {
@@ -207,6 +207,9 @@ void Session::ProcessConnect()
 	_connectEvent.owner = nullptr;
 	_connected.store(true);
 
+	if (auto service = _service.lock())
+		service->AddSession(GetSessionRef());
+
 	OnConnected();
 
 	RegisterRecv();
@@ -217,6 +220,9 @@ void Session::Disconnect(const WCHAR* cause)
 	if (_connected.exchange(false) == false) return; // 소켓 중복 해제 위험 방지
 
 	wprintf(L"[Disconnect] Cause : %s\n", cause);
+
+	if (auto service = _service.lock())
+		service->ReleaseSession(GetSessionRef());
 
 	OnDisconnected();
 	SocketUtils::Close(_socket);

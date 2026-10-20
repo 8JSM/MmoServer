@@ -26,7 +26,10 @@ HANDLE Listener::GetHandle()
 
 void Listener::Dispatch(IocpEvent* iocpEvent, int32 numOfBytes)
 {
+	ASSERT_CRASH(iocpEvent->eventType == EventType::Accept);
 
+	AcceptEvent* acceptEvent = static_cast<AcceptEvent*>(iocpEvent);
+	ProcessAccept(acceptEvent);
 }
 
 bool Listener::StartAccept(std::shared_ptr<Service> service)

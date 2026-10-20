@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ClientService.h" />
     <ClInclude Include="CorePch.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="IocpCore.h" />
@@ -155,11 +156,13 @@
     <ClInclude Include="SendBuffer.h" />
     <ClInclude Include="SendBufferChunk.h" />
     <ClInclude Include="SendBufferManager.h" />
+    <ClInclude Include="ServerService.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="SocketUtils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClientService.cpp" />
     <ClCompile Include="IocpCore.cpp" />
     <ClCompile Include="IocpEvent.cpp" />
     <ClCompile Include="IocpObject.cpp" />
@@ -176,6 +179,7 @@
     <ClCompile Include="SendBufferChunk.cpp" />
     <ClCompile Include="SendBufferManager.cpp" />
     <ClCompile Include="ServerCore.cpp" />
+    <ClCompile Include="ServerService.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="SocketUtils.cpp" />

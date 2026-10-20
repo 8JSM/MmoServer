@@ -32,6 +32,7 @@ public:
 	SOCKET GetSocket() const { return _socket; }
 	NetAddress GetNetAddress() const { return _netAddress; }
 	void SetNetAddress(NetAddress netAddress) { _netAddress = netAddress; }
+	std::shared_ptr<Session> GetSessionRef() { return std::static_pointer_cast<Session>(shared_from_this()); }
 
 protected:
 	// ÄÜÅÙÃ÷ °èÃş ¿À¹ö¶óÀÌµù ¸Å¼­µå
