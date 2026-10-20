@@ -9,6 +9,7 @@ class Session : public IocpObject
 {
 	friend class IocpCore;
 	friend class Service;
+	friend class Listener;
 
 	enum
 	{

@@ -2,6 +2,7 @@
 
 class IocpObject;
 class SendBuffer;
+class Session;
 
 enum class EventType : uint8
 {
@@ -32,6 +33,8 @@ struct IocpEvent
 struct AcceptEvent : public IocpEvent
 {
 	AcceptEvent() : IocpEvent(EventType::Accept) {}
+
+	std::shared_ptr<Session> session = nullptr;
 };
 
 struct SendEvent : public IocpEvent
