@@ -3,7 +3,7 @@
 #include "SendBufferChunk.h"
 
 thread_local SendBufferChunkRef LSendBufferChunk = nullptr;
-//std::mutex SendBufferManager::_lock;
+std::mutex SendBufferManager::_lock;
 std::vector<SendBufferChunkRef> SendBufferManager::_sendBufferChunks;
 
 SendBufferManager::SendBufferManager()

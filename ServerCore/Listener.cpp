@@ -141,11 +141,13 @@ void Listener::ProcessAccept(AcceptEvent* acceptEvent)
 	}
 	session->SetNetAddress(NetAddress(sockAddress));
 
-	if (service->GetIocpCore()->Register(session) == false)
+	/*if (service->GetIocpCore()->Register(session) == false)
 	{
+		int32 errorCode = ::GetLastError();
+		std::cout << "[ERROR] IOCP Register Failed! Code: " << errorCode << std::endl;
 		RegisterAccept(acceptEvent);
 		return;
-	}
+	}*/
 
 	session->ProcessConnect();
 

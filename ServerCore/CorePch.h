@@ -26,3 +26,22 @@
 // 공용 타입 및 헤더
 #include "../Common/Types.h"
 #include "../Common/PacketHeader.h"
+
+// 네트워크 및 유틸리티
+#include "NetAddress.h"
+#include "SocketUtils.h"
+// IOCP 기반 클래스
+#include "IocpCore.h"
+#include "IocpObject.h"
+#include "IocpEvent.h"
+// 버퍼 관리
+#include "RecvBuffer.h"
+#include "SendBuffer.h"
+#include "SendBufferChunk.h"
+#include "SendBufferManager.h"
+// 세션 및 서비스
+#include "Session.h"
+#include "Service.h"
+#include "ServerService.h"
+#include "ClientService.h"
+#include "Listener.h"

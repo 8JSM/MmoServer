@@ -23,7 +23,7 @@ struct IocpEvent
 		Init();
 	}
 
-	virtual void Init()
+	void Init()
 	{
 		::memset(&overlapped, 0, sizeof(overlapped));
 		owner = nullptr;
@@ -35,6 +35,12 @@ struct AcceptEvent : public IocpEvent
 	AcceptEvent() : IocpEvent(EventType::Accept) {}
 
 	std::shared_ptr<Session> session = nullptr;
+
+	void Init()
+	{
+		IocpEvent::Init();
+		session = nullptr;
+	}
 };
 
 struct SendEvent : public IocpEvent
@@ -43,7 +49,7 @@ struct SendEvent : public IocpEvent
 
 	std::vector<std::shared_ptr<SendBuffer>> sendBuffers;
 
-	virtual void Init() override
+	void Init()
 	{
 		IocpEvent::Init();
 		sendBuffers.clear();
