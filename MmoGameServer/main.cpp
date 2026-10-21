@@ -16,7 +16,8 @@ int main()
 
 	std::vector<std::thread> threads;
 
-	const int32 threadCount = std::thread::hardware_concurrency();
+	//const int32 threadCount = std::thread::hardware_concurrency();
+	const int32 threadCount = 1;
 
 	for (int32 i = 0; i < threadCount; i++)
 	{

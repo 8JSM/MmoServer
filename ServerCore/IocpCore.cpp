@@ -48,11 +48,12 @@ bool IocpCore::Dispatch(uint32 timeoutMs)
 	}
 
 	std::shared_ptr<IocpObject> owner = iocpEvent->owner;
+	iocpEvent->owner = nullptr;
 
 	if (owner != nullptr)
 	{
 		owner->Dispatch(iocpEvent, numOfBytes);
-		iocpEvent->owner = nullptr;
+		
 	}
 	return true;
 }
